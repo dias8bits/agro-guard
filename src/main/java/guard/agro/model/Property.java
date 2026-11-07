@@ -5,7 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,8 +35,14 @@ public class Property {
     @OneToMany(mappedBy = "property")
     private List<Occurrence> occurrences;
 
-    @OneToMany(mappedBy = "property")
-    private List<Employee> employees;
+    @ManyToMany
+    @JoinTable(
+            name = "property_employee",
+            joinColumns = @JoinColumn(name = "property_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @Builder.Default
+    private Set<User> employees = new HashSet<>();
 
     @OneToMany(mappedBy = "property")
     private List<Equipment> equipments;

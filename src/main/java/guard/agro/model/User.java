@@ -1,5 +1,6 @@
 package guard.agro.model;
 
+import guard.agro.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -25,4 +26,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String cpf;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRoleEnum role;
 }
