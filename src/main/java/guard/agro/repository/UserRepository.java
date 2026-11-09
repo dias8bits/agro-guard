@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    boolean findUserByCpfIgnoreCase (String Cpf);
-
     boolean existsByEmailIgnoreCase(String email);
 
     boolean existsByEmailAndIdNot(String email, Long id);
