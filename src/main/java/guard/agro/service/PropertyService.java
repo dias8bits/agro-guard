@@ -1,6 +1,6 @@
 package guard.agro.service;
 
-import guard.agro.Exception.NotFoundException;
+import guard.agro.exception.NotFoundException;
 import guard.agro.model.Property;
 import guard.agro.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,9 @@
 package guard.agro.service;
 
-import guard.agro.Exception.CpfAlreadyExistsException;
-import guard.agro.Exception.EmailAlreadyExistsException;
-import guard.agro.Exception.NotFoundException;
+import guard.agro.exception.CpfAlreadyExistsException;
+import guard.agro.exception.EmailAlreadyExistsException;
+import guard.agro.exception.NotFoundException;
+import guard.agro.enums.UserRoleEnum;
 import guard.agro.model.User;
 import guard.agro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,13 +34,16 @@ public class UserService {
     public User save (User userToSave) {
         validateUniqueFields(userToSave);
 
+        userToSave.setRole(UserRoleEnum.USER);
+
         return userRepository.save(userToSave);
     }
 
     @Transactional
     public User update (User userToUpdate, Long id) {
-        findUserByIdOrElseThrow(id);
+        var existing = findUserByIdOrElseThrow(id);
         userToUpdate.setId(id);
+        userToUpdate.setRole(existing.getRole());
 
         validateUniqueFieldsForUpdate(userToUpdate);
 

@@ -1,4 +1,4 @@
-package guard.agro.Exception;
+package guard.agro.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
