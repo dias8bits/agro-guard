@@ -8,6 +8,7 @@ import guard.agro.dto.response.PropertyPostResponse;
 import guard.agro.dto.response.PropertyPutResponse;
 import guard.agro.model.Property;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;
@@ -19,10 +20,12 @@ public interface PropertyMapper {
 
     List<PropertyGetResponse> toPropertyGetResponseList(List<Property> properties);
 
+    @Mapping(source = "ownerId", target = "owner.id")
     Property toProperty(PropertyPostRequest request);
 
     PropertyPostResponse toPropertyPostResponse(Property property);
 
+    @Mapping(source = "ownerId", target = "owner.id")
     Property toProperty (PropertyPutRequest request);
 
     PropertyPutResponse toPropertyPutResponse(Property property);
