@@ -1,5 +1,6 @@
 package guard.agro.dto.response;
 
+import guard.agro.enums.UserRoleEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -10,17 +11,14 @@ import lombok.Setter;
 @Setter
 public class UserPutResponse {
 
-    @NotBlank(message = "the field 'name' is required")
+    private Long id;
+
     private String name;
 
-    @Email(message = "invalid email")
-    @NotBlank(message = "the field 'email' is required")
     private String email;
 
-    @Pattern(
-            regexp = "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$",
-            message = "invalid cpf")
-    @NotBlank(message = "the field 'cpf' is required")
     private String cpf;
+
+    private UserRoleEnum role;
 
 }

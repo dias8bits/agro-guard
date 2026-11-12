@@ -43,8 +43,9 @@ public class OccurrenceService {
 
     @Transactional
     public Occurrence update(Occurrence occurrenceToUpdate, Long id) {
-        findOccurrenceByIdOrElseThrow(id);
+        var existing = findOccurrenceByIdOrElseThrow(id);
         occurrenceToUpdate.setId(id);
+        occurrenceToUpdate.setDateTime(existing.getDateTime());
 
         resolveProperty(occurrenceToUpdate);
 
