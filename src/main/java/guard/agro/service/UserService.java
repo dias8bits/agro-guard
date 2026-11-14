@@ -1,12 +1,13 @@
 package guard.agro.service;
 
+import guard.agro.enums.UserRoleEnum;
 import guard.agro.exception.CpfAlreadyExistsException;
 import guard.agro.exception.EmailAlreadyExistsException;
 import guard.agro.exception.NotFoundException;
-import guard.agro.enums.UserRoleEnum;
 import guard.agro.model.User;
 import guard.agro.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> findAll(Long id) {
         return id == null ? userRepository.findAll() : Collections.singletonList(findUserByIdOrElseThrow(id));
@@ -31,19 +33,21 @@ public class UserService {
     }
 
     @Transactional
-    public User save (User userToSave) {
+    public User save(User userToSave) {
         validateUniqueFields(userToSave);
 
-        userToSave.setRole(UserRoleEnum.USER);
+        userToSave.setRole(UserRoleEnum.EMPLOYEE);
+        userToSave.setPassword(null);
 
         return userRepository.save(userToSave);
     }
 
     @Transactional
-    public User update (User userToUpdate, Long id) {
+    public User update(User userToUpdate, Long id) {
         var existing = findUserByIdOrElseThrow(id);
         userToUpdate.setId(id);
         userToUpdate.setRole(existing.getRole());
+        userToUpdate.setPassword(existing.getPassword());
 
         validateUniqueFieldsForUpdate(userToUpdate);
 
@@ -51,7 +55,7 @@ public class UserService {
     }
 
     @Transactional
-    public void delete (User user) {
+    public void delete(User user) {
         var userToDelete = findUserByIdOrElseThrow(user.getId());
 
         userRepository.delete(userToDelete);

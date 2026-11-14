@@ -25,6 +25,13 @@ public class GlobalErrorHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<DefaultErrorMessage> InvalidCredentialsException(InvalidCredentialsException e) {
+        var error = new DefaultErrorMessage(HttpStatus.UNAUTHORIZED.value(), e.getReason());
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<DefaultErrorMessage> EmailAlreadyExistsException(EmailAlreadyExistsException e) {
         var error = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getReason());
 

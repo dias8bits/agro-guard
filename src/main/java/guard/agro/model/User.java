@@ -2,7 +2,6 @@ package guard.agro.model;
 
 import guard.agro.enums.UserRoleEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -25,6 +24,8 @@ public class User {
 
     @Column(unique = true, nullable = false)
     private String cpf;
+
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -12,6 +12,13 @@ spring:
       ddl-auto: create-drop
     show-sql: true
 
+app:
+  jwt:
+    secret: ${ENV_JWT_SECRET}
+    expiration-minutes: 120
+  cors:
+    allowed-origin: http://localhost:5173
+
 server:
   servlet:
     context-path: /
