@@ -4,9 +4,8 @@ public enum EquipmentTypeEnum {
     CAMERA,
     SENSOR_MOVIMENTO,
     ALARME,
-    CERCA_ELETRICA,
-    RASTREADOR,
     DRONE,
+    CERCA_ELETRICA,
     RADIO_COMUNICADOR,
     MAQUINARIO_GERAL,
     OUTRO

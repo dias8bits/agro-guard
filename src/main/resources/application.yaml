@@ -1,28 +1,29 @@
 spring:
   application:
     name: agro-guard
-  config:
-    import: optional:file:.env[.properties]
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/agro-guard
-    username: ${ENV_POSTGRES_USER}
-    password: ${ENV_POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
 
 app:
   jwt:
-    secret: ${ENV_JWT_SECRET}
+    secret: ${DATABASE_JWT_SECRET}
     expiration-minutes: 120
   cors:
     allowed-origin: ${ALLOWED_ORIGIN}
 
 server:
+  address: 0.0.0.0
   servlet:
     context-path: /
-  port: 8080
+  port: ${PORT:8080}
   error:
     include-stacktrace: never
     include-message: never

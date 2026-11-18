@@ -18,35 +18,35 @@ import java.util.stream.Collectors;
 public class GlobalErrorHandler {
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> NotFoundException(NotFoundException e) {
+    public ResponseEntity<DefaultErrorMessage> handleNotFoundException(NotFoundException e) {
         var error = new DefaultErrorMessage(HttpStatus.NOT_FOUND.value(), e.getReason());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> InvalidCredentialsException(InvalidCredentialsException e) {
+    public ResponseEntity<DefaultErrorMessage> handleInvalidCredentialsException(InvalidCredentialsException e) {
         var error = new DefaultErrorMessage(HttpStatus.UNAUTHORIZED.value(), e.getReason());
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> EmailAlreadyExistsException(EmailAlreadyExistsException e) {
+    public ResponseEntity<DefaultErrorMessage> handleEmailAlreadyExistsException(EmailAlreadyExistsException e) {
         var error = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getReason());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> CpfAlreadyExistsException(CpfAlreadyExistsException e) {
+    public ResponseEntity<DefaultErrorMessage> handleCpfAlreadyExistsException(CpfAlreadyExistsException e) {
         var error = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getReason());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseEntity<DefaultErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         var message = e.getBindingResult().getFieldErrors().stream()
                 .map(f -> f.getDefaultMessage())
                 .collect(Collectors.joining(", "));
@@ -57,14 +57,14 @@ public class GlobalErrorHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> HttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public ResponseEntity<DefaultErrorMessage> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         var error = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), "malformed request body or invalid value");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+    public ResponseEntity<DefaultErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         var message = String.format("invalid value for parameter '%s'", e.getName());
 
         var error = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), message);
@@ -73,7 +73,7 @@ public class GlobalErrorHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> DataIntegrityViolationException(DataIntegrityViolationException e) {
+    public ResponseEntity<DefaultErrorMessage> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
         log.error("data integrity violation", e);
 
         var error = new DefaultErrorMessage(HttpStatus.CONFLICT.value(), "data integrity violation");
@@ -82,14 +82,23 @@ public class GlobalErrorHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> NoResourceFoundException(NoResourceFoundException e) {
+    public ResponseEntity<DefaultErrorMessage> handleNoResourceFoundException(NoResourceFoundException e) {
         var error = new DefaultErrorMessage(HttpStatus.NOT_FOUND.value(), "resource not found");
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<DefaultErrorMessage> Exception(Exception e) {
+    public ResponseEntity<DefaultErrorMessage> handleNullPointerException(NullPointerException e) {
+        log.error("null pointer exception", e);
+
+        var error = new DefaultErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), "internal server error");
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<DefaultErrorMessage> handleException(Exception e) {
         log.error("unexpected error", e);
 
         var error = new DefaultErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), "internal server error");

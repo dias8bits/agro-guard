@@ -18,7 +18,7 @@ public class PropertyPutRequest {
     @NotBlank(message = "the field 'address' is required")
     String address;
 
-    @NotBlank(message = "the field 'hectares' is required")
+    @NotNull(message = "the field 'hectares' is required")
     @Positive
     BigDecimal hectares;
 

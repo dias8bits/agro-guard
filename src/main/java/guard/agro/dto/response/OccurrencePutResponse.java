@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Setter
 public class OccurrencePutResponse {
 
+    Long id;
+
     String title;
 
     String description;

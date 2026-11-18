@@ -3,8 +3,8 @@ services:
     container_name: agro-guard
     image: postgres:18.4
     environment:
-      POSTGRES_USER: ${ENV_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${ENV_POSTGRES_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: agro-guard
     ports:
       - "5432:5432"
